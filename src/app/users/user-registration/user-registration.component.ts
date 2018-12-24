@@ -14,16 +14,17 @@ export class UserRegistrationComponent implements OnInit {
   private registerForm:FormGroup;
   private errorMessage:string;
   
-  constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) {}
+  constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) {
+    if (this.usersService.isAuthenticated()) { 
+      this.router.navigate(['dashboard']);
+    }
+  }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
       username: ['', Validators.required ],
       password: ['',Validators.required]
     });
-    if(this.usersService.isAuthenticated){
-      this.router.navigate(['/dashboard']);
-    }
   }
 
   onFormSubmit(form:FormGroup) {

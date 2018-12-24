@@ -30,7 +30,7 @@ export class UsersService {
 
   public isAuthenticated(): boolean {
     if(localStorage.length > 0) {
-      const token = localStorage.getItem('id_token');
+      const token:string = localStorage.getItem('id_token');
       return !this.jwtHelper.isTokenExpired(token);
     }
     return false;

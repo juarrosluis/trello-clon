@@ -16,16 +16,17 @@ export class UserLoginComponent implements OnInit {
   private loginForm:FormGroup;
   private errorMessage:string;
 
-  constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) { }
+  constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) {
+    if (this.usersService.isAuthenticated()) { 
+      this.router.navigate(['dashboard']);
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required ],
       password: ['',Validators.required]
     });
-    if(this.usersService.isAuthenticated){
-      this.router.navigate(['/dashboard']);
-    }
   }
 
   onFormSubmit(form:FormGroup) {
@@ -36,8 +37,13 @@ export class UserLoginComponent implements OnInit {
 
     this.usersService.retrieveUser(form_data)
       .subscribe(res => {
-        this.setSession(res);
-        this.router.navigate(['/dashboard']);
+        if(res === null) {
+          this.errorMessage = "There was an error trying to log in."
+        }
+        else {
+          this.setSession(res);
+          this.router.navigate(['/dashboard']);
+        }
       }, (err) => {
         console.log(err);
         this.errorMessage = "There was an error trying to log in."
@@ -48,7 +54,7 @@ export class UserLoginComponent implements OnInit {
     const expiresAt = moment().add(3600,'second');
 
     localStorage.setItem('id_token', authResult);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+    //localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
   }  
 
   
