@@ -9,9 +9,11 @@
           <input type="text" placeholder="Username" formControlName="username" class="form-control" required autofocus>
           <label class="sr-only">Password</label>
           <input type="password" class="form-control" placeholder="Password" formControlName="password" required>
-          <span class="error">{{errorMessage}}</span>
+          <span class="text-danger">{{errorMessage}}</span>
           <br/>
           <button [disabled]="!registerForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+          <br/>
+          <p><span>Do you already have a user? <a routerLink="/login">Login here</a></span></p>
           <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
         </form>
       </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { IUser } from 'src/app/interfaces/user';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration',
@@ -11,8 +12,9 @@ import { UsersService } from 'src/app/services/users.service';
 export class UserRegistrationComponent implements OnInit {
 
   private registerForm:FormGroup;
+  private errorMessage:string;
   
-  constructor(private fb: FormBuilder, private usersService: UsersService) {}
+  constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -31,9 +33,10 @@ export class UserRegistrationComponent implements OnInit {
 
     this.usersService.createUser(form_data)
       .subscribe(res => {
-        console.log(res.status);
+        this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);
+        this.errorMessage = "There was an error trying to register."
       });
   }
 
