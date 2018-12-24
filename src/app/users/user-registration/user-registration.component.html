@@ -1,3 +1,21 @@
-<p>
-  user-registration works!
-</p>
+<div class="row h-100">
+  <div class="col-sm-12 my-auto">
+    <div class="row align-items-center">
+      <div class="col"></div>
+      <div class="col text-center">
+        <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit(registerForm)">
+          <h1 class="h3 mb-3 font-weight-normal">Please Register</h1>
+          <label class="sr-only">Username</label>
+          <input type="text" placeholder="Username" formControlName="username" class="form-control" required autofocus>
+          <label class="sr-only">Password</label>
+          <input type="password" class="form-control" placeholder="Password" formControlName="password" required>
+          <span class="error">{{errorMessage}}</span>
+          <br/>
+          <button [disabled]="!registerForm.valid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+          <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+        </form>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+</div>

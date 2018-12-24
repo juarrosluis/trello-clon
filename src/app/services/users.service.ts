@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class UsersService {
 
-  private usersApi = "https://apitrello.herokuapp.com/users";
+  private usersApi = " http://localhost:1337/apitrello.herokuapp.com/users";
   
   constructor(private httpClient: HttpClient) {}
 
