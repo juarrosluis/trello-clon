@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClientModule, HttpRequest, HttpParams } from '@angular/common/http';
 
 import { UsersService } from './users.service';
+import { IUser } from '../interfaces/user';
 
 describe('UsersService', () => {
   beforeEach(() => 
@@ -28,7 +29,7 @@ describe('UsersService', () => {
 
   it(`should send an expected register request`, async(inject([UsersService, HttpTestingController],
     (service: UsersService, backend: HttpTestingController) => {
-      const valid_user:any = {"username":"username", "password":"password"};
+      const valid_user:IUser = {"username":"username", "password":"password"};
       service.createUser(valid_user).subscribe();
 
       backend.expectOne((req: HttpRequest<any>) => {
