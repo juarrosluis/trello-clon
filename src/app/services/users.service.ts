@@ -13,10 +13,15 @@ const httpOptions = {
 export class UsersService {
 
   private usersApi = " http://localhost:1337/apitrello.herokuapp.com/users";
+  private usersLoginApi = " http://localhost:1337/apitrello.herokuapp.com/users/login";
   
   constructor(private httpClient: HttpClient) {}
 
   public createUser(data:IUser): Observable<any> {
     return this.httpClient.post<any>(this.usersApi, data, httpOptions)
+  }
+
+  public retrieveUser(data:IUser): Observable<any> {
+    return this.httpClient.post<any>(this.usersLoginApi, data, httpOptions)
   }
 }
