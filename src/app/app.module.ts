@@ -7,11 +7,13 @@ import { UserRegistrationComponent } from './users/user-registration/user-regist
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from './services/users.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UserLoginComponent } from './users/user-login/user-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
