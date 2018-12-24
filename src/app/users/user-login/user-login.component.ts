@@ -35,6 +35,7 @@ export class UserLoginComponent implements OnInit {
       .subscribe(res => {
         //this.router.navigate(['/dashboard']);
         console.log("Logged in")
+        console.log(res)
       }, (err) => {
         console.log(err);
         this.errorMessage = "There was an error trying to log in."

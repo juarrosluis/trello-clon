@@ -4,7 +4,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IUser } from '../interfaces/user';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  responseType: 'text' as 'json',
 };
 
 @Injectable({
@@ -21,7 +22,7 @@ export class UsersService {
     return this.httpClient.post<any>(this.usersApi, data, httpOptions)
   }
 
-  public retrieveUser(data:IUser): Observable<any> {
-    return this.httpClient.post<any>(this.usersLoginApi, data, httpOptions)
+  public retrieveUser(data:IUser): Observable<string> {
+    return this.httpClient.post<string>(this.usersLoginApi, data, httpOptions)
   }
 }
