@@ -19,13 +19,11 @@ export class UserLoginComponent implements OnInit {
   constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) { }
 
   ngOnInit() {
-    if(this.isLoggedOut()){
-      this.loginForm = this.fb.group({
-        username: ['', Validators.required ],
-        password: ['',Validators.required]
-      });
-    }
-    else {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required ],
+      password: ['',Validators.required]
+    });
+    if(this.usersService.isAuthenticated){
       this.router.navigate(['/dashboard']);
     }
   }

@@ -29,7 +29,10 @@ export class UsersService {
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('id_token');
-    return !this.jwtHelper.isTokenExpired(token);
+    if(localStorage.length > 0) {
+      const token = localStorage.getItem('id_token');
+      return !this.jwtHelper.isTokenExpired(token);
+    }
+    return false;
   }
 }

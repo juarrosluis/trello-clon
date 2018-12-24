@@ -21,6 +21,9 @@ export class UserRegistrationComponent implements OnInit {
       username: ['', Validators.required ],
       password: ['',Validators.required]
     });
+    if(this.usersService.isAuthenticated){
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   onFormSubmit(form:FormGroup) {
