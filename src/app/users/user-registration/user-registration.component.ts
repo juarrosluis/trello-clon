@@ -28,9 +28,7 @@ export class UserRegistrationComponent implements OnInit {
       "username" : form.controls['username'].value,
       "password" : form.controls['password'].value
     }
-    console.log("username: " + form_data.username);
-    console.log("password: " + form_data.password);
-
+    
     this.usersService.createUser(form_data)
       .subscribe(res => {
         this.router.navigate(['/login']);

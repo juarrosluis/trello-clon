@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/interfaces/user';
+import * as moment from "moment";
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-user-login',
@@ -17,10 +19,15 @@ export class UserLoginComponent implements OnInit {
   constructor(private router: Router, private fb: FormBuilder, private usersService: UsersService) { }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required ],
-      password: ['',Validators.required]
-    });
+    if(this.isLoggedOut()){
+      this.loginForm = this.fb.group({
+        username: ['', Validators.required ],
+        password: ['',Validators.required]
+      });
+    }
+    else {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   onFormSubmit(form:FormGroup) {
@@ -28,18 +35,37 @@ export class UserLoginComponent implements OnInit {
       "username" : form.controls['username'].value,
       "password" : form.controls['password'].value
     }
-    console.log("username: " + form_data.username);
-    console.log("password: " + form_data.password);
 
     this.usersService.retrieveUser(form_data)
       .subscribe(res => {
-        //this.router.navigate(['/dashboard']);
-        console.log("Logged in")
-        console.log(res)
+        this.setSession(res);
+        this.router.navigate(['/dashboard']);
       }, (err) => {
         console.log(err);
         this.errorMessage = "There was an error trying to log in."
       });
   }
 
+  private setSession(authResult) {
+    const expiresAt = moment().add(3600,'second');
+
+    localStorage.setItem('id_token', authResult);
+    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+  }  
+
+  
+
+  public isLoggedIn() {
+      return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+      return !this.isLoggedIn();
+  }
+
+  getExpiration() {
+      const expiration = localStorage.getItem("expires_at");
+      const expiresAt = JSON.parse(expiration);
+      return moment(expiresAt);
+  }    
 }

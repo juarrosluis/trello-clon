@@ -8,20 +8,33 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from './services/users.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserLoginComponent } from './users/user-login/user-login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { UsersGuardService } from './services/users-guard.service';
+
+export function tokenGetter() {
+  return localStorage.getItem('id_token');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      }
+    })
   ],
-  providers: [UsersService],
+  providers: [UsersService, UsersGuardService, JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
