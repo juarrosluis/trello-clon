@@ -19,7 +19,7 @@ export class ListsComponent implements OnInit {
     'Artist V - Mayorkun'
   ];
 
-  constructor(private fb: FormBuilder, private usersService: ListsService) {
+  constructor(private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({
       listName: ['', Validators.required ]
     });
@@ -39,22 +39,20 @@ export class ListsComponent implements OnInit {
 
   onFormSubmit(form:FormGroup) {
     const form_data = {
-      "listName" : form.controls['listName'].value
+      "name" : form.controls['listName'].value
     }
 
-    /*this.listsService.retrieveUser(form_data)
+    this.listsService.createUser(form_data)
       .subscribe(res => {
         if(res === null) {
-          this.errorMessage = "There was an error trying to log in."
+          console.log("res === null");
         }
         else {
-          this.setSession(res);
-          this.router.navigate(['/dashboard']);
+          console.log("res != null"); 
         }
       }, (err) => {
         console.log(err);
-        this.errorMessage = "There was an error trying to log in."
-      });*/
+      });
   }
 
 
