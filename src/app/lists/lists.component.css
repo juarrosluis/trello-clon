@@ -1,0 +1,11 @@
+.list {
+    margin-top: 10px;
+    padding-top: 15px;
+    background-color: lightgray;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.list-item {
+    background-color: yellow;
+}

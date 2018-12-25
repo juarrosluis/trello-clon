@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { UsersGuardService } from './services/users-guard.service';
 import { ListsComponent } from './lists/lists.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export function tokenGetter() {
   return localStorage.getItem('id_token');
@@ -34,7 +35,8 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
       }
-    })
+    }),
+    DragDropModule
   ],
   providers: [UsersService, UsersGuardService, JwtHelperService],
   bootstrap: [AppComponent]
