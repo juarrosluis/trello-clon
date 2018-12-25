@@ -32,7 +32,7 @@ export class ListsComponent implements OnInit {
 
   deleteOneList(id:string) {
     this.listsService.deleteList(id).subscribe(
-      res => console.log(res)
+      res => this.getAllLists()
     );
   }
   getAllLists() {
@@ -50,10 +50,11 @@ export class ListsComponent implements OnInit {
   }
 
   onFormSubmit(form:FormGroup) {
+    this.closeListCreation();
     const form_data = {
       "name" : form.controls['listName'].value
     }
-
+    form.controls['listName'].setValue("");
     this.listsService.createList(form_data)
       .subscribe(res => {
         if(res === null) {
@@ -63,7 +64,7 @@ export class ListsComponent implements OnInit {
           console.log("res != null");
           this.listsService.retrieveOneList(res.id)
             .subscribe(res => {
-              console.log(res.name)
+              this.getAllLists()
             })
         }
       }, (err) => {
