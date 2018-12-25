@@ -11,6 +11,7 @@ import { UserLoginComponent } from './users/user-login/user-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { UsersGuardService } from './services/users-guard.service';
+import { ListsComponent } from './lists/lists.component';
 
 export function tokenGetter() {
   return localStorage.getItem('id_token');
@@ -21,7 +22,8 @@ export function tokenGetter() {
     AppComponent,
     UserRegistrationComponent,
     UserLoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ListsComponent
   ],
   imports: [
     BrowserModule,
