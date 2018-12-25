@@ -7,9 +7,13 @@
       </ul>
   </div>
 
-  <div class="col-sm-3">
+  <div *ngFor="let list of lists" class="col-sm-3">
     <div class="card list">
-      <p class="card-title">Card title</p>
+      <span>
+        <p class="card-title">{{list.name}}
+        <button type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list.id)"><i class="fas fa-trash-alt"></i></button></p>
+        
+      </span>
       <div cdkDropList>
         <div *ngFor="let artist of artists" class="card list-item" cdkDrag>
           <div class="card-body">
@@ -19,6 +23,7 @@
       </div>
     </div>
   </div> 
+
   <div class="col-sm-3">
     <div class="card list">
       <div *ngIf="createAList; else offerToCreateAList">
@@ -28,7 +33,7 @@
           </div>
           <span>
             <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
-            <button type="button" class="btn btn-outline-secondarycol-sm-1" (click)="closeListCreation()">X</button>
+            <button type="button" class="btn btn-outline-secondary col-sm-1" (click)="closeListCreation()">X</button>
           </span>
         </form>
       </div>

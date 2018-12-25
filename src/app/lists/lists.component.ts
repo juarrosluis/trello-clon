@@ -30,6 +30,11 @@ export class ListsComponent implements OnInit {
     this.getAllLists(); 
   }
 
+  deleteOneList(id:string) {
+    this.listsService.deleteList(id).subscribe(
+      res => console.log(res)
+    );
+  }
   getAllLists() {
     this.listsService.retrieveAllLists().subscribe(
       data => this.lists = data
