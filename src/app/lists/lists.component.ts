@@ -12,7 +12,7 @@ export class ListsComponent implements OnInit {
   private createListForm:FormGroup;
   private createAList:boolean = false;
   artists = [
-    'Artist I - Davido',
+    'The One Thing: The surprisingly simple truth behind extraordinary results',
     'Artist II - Wizkid',
     'Artist III - Burna Boy',
     'Artist IV - Kiss Daniel',

@@ -1,32 +1,35 @@
-<div class="card list col-sm-4">
-  <div *ngIf="createAList; else offerToCreateAList">
-    <form [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
-      <div class="input-group input-group-sm mb-1">
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="card list">
+      <p class="card-title">Card title</p>
+      <div cdkDropList>
+        <div *ngFor="let artist of artists" class="card list-item" cdkDrag>
+          <div class="card-body">
+            {{artist}}
+          </div>
+        </div>
       </div>
-      <span>
-        <button type="submit" class="btn btn-success btn-sm col-sm-3" [disabled]="!createListForm.valid">Add List</button>
-        <button type="button" class="btn btn-outline-secondarycol-sm-1" (click)="closeListCreation()">X</button>
-      </span>
-    </form>
-  </div>
-  <ng-template #offerToCreateAList>
-    <div class="card-body" (click)="wantToCreateAList()">
-      + Add another list
     </div>
-  </ng-template>
-  
-    
-  
+  </div> 
+  <div class="col-sm-3">
+    <div class="card list">
+      <div *ngIf="createAList; else offerToCreateAList">
+        <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
+          <div class="input-group input-group-sm mb-1">
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
+          </div>
+          <span>
+            <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
+            <button type="button" class="btn btn-outline-secondarycol-sm-1" (click)="closeListCreation()">X</button>
+          </span>
+        </form>
+      </div>
+      <ng-template #offerToCreateAList>
+        <div class="card-body add-another-list" (click)="wantToCreateAList()">
+          + Add another list
+        </div>
+      </ng-template>
+    </div>
+  </div>
+   
 </div>
-
-<!--<div class="card list col-sm-4">
-  <div cdkDropList>
-    <div *ngFor="let artist of artists" class="card list-item" cdkDrag>
-      <div class="card-body">
-        {{artist}}
-      </div>
-    </div>
-  </div>
-</div>-->
-
