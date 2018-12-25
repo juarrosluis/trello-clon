@@ -15,7 +15,16 @@ export class ListsService {
   
   constructor(private httpClient: HttpClient) { }
 
-  createUser(data): Observable<any> {
+  createList(data): Observable<any> {
     return this.httpClient.post<any>(this.listsApi, data, httpOptions)
   }
+
+  retrieveOneList(id): Observable<any> {
+    return this.httpClient.get<any>(this.listsApi + "/" + id, httpOptions)
+  }
+
+  retrieveAllLists(): Observable<any[]> {
+    return this.httpClient.get<any[]>(this.listsApi, httpOptions)
+  }
+
 }

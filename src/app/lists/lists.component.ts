@@ -11,6 +11,7 @@ export class ListsComponent implements OnInit {
   
   private createListForm:FormGroup;
   private createAList:boolean = false;
+  private lists:any[];
   artists = [
     'The One Thing: The surprisingly simple truth behind extraordinary results',
     'Artist II - Wizkid',
@@ -26,7 +27,13 @@ export class ListsComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+    this.getAllLists(); 
+  }
+
+  getAllLists() {
+    this.listsService.retrieveAllLists().subscribe(
+      data => this.lists = data
+    );
   }
 
   wantToCreateAList(){
@@ -42,13 +49,17 @@ export class ListsComponent implements OnInit {
       "name" : form.controls['listName'].value
     }
 
-    this.listsService.createUser(form_data)
+    this.listsService.createList(form_data)
       .subscribe(res => {
         if(res === null) {
           console.log("res === null");
         }
         else {
-          console.log("res != null"); 
+          console.log("res != null");
+          this.listsService.retrieveOneList(res.id)
+            .subscribe(res => {
+              console.log(res.name)
+            })
         }
       }, (err) => {
         console.log(err);
