@@ -14,6 +14,11 @@ import { UsersGuardService } from './services/users-guard.service';
 import { ListsComponent } from './lists/lists.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InterceptorService } from './services/interceptor.service';
+import { SnackbarComponent } from './snackbar/snackbar.component';
+import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule } from '@angular/material';
+import { Overlay } from '@angular/cdk/overlay';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 export function tokenGetter() {
   return localStorage.getItem('id_token');
@@ -25,7 +30,8 @@ export function tokenGetter() {
     UserRegistrationComponent,
     UserLoginComponent,
     DashboardComponent,
-    ListsComponent
+    ListsComponent,
+    SnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,9 @@ export function tokenGetter() {
         tokenGetter: tokenGetter,
       }
     }),
-    DragDropModule
+    DragDropModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [UsersService, UsersGuardService, JwtHelperService, {
     provide: HTTP_INTERCEPTORS,

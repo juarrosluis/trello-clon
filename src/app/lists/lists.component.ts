@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListsService } from '../services/lists.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-lists',
@@ -20,7 +21,7 @@ export class ListsComponent implements OnInit {
     'Artist V - Mayorkun'
   ];
 
-  constructor(private fb: FormBuilder, private listsService: ListsService) {
+  constructor(private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({
       listName: ['', Validators.required ]
     });
@@ -69,8 +70,7 @@ export class ListsComponent implements OnInit {
         }
       }, (err) => {
         console.log(err);
+        let snackBarRef = this.sb.openSnackBar('Error creating the list :(', "Close");
       });
   }
-
-
 }
