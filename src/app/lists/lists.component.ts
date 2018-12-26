@@ -13,6 +13,7 @@ export class ListsComponent implements OnInit {
   private createListForm:FormGroup;
   private createAList:boolean = false;
   private lists:any[];
+  private sortedLists:any[];
   private editMode:boolean[];
   artists = [
     'The One Thing: The surprisingly simple truth behind extraordinary results',
@@ -42,16 +43,26 @@ export class ListsComponent implements OnInit {
       res => this.getAllLists()
     );
   }
+
+  modifyListName(name, id) {
+    console.log("name: " + name + " id: " + id);
+    const listUpdated = {
+      name : name
+    }
+    this.modifyOneList(listUpdated,id);
+  }
   deleteOneList(id:string) {
     this.listsService.deleteList(id).subscribe(
       res => this.getAllLists()
     );
   }
   getAllLists() {
-    this.listsService.retrieveAllLists().subscribe(
+    this.listsService.retrieveAllLists()
+    
+   .subscribe(
       data => {
-        this.lists = data.map(list => [list.id, list.name, false])
-        console.log(this.lists[0])
+        var sortedLists = data.sort((obj1,obj2) => obj1.id - obj2.id)
+        this.lists = sortedLists.map(list => [list.id, list.name, false])
       }
     );
   }
