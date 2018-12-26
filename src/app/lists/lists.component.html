@@ -1,9 +1,19 @@
 <div class="row">
-  <div *ngFor="let list of lists" class="col-sm-3">
+  <div *ngFor="let list of lists; let i = index" class="col-sm-3">
     <div class="card list">
       <span>
-        <p class="card-title">{{list.name}}
-        <button type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list.id)"><i class="fas fa-trash-alt"></i></button></p>
+      <div class="card-title">
+        <button type="button" class="btn-link btn-sm transparent" [hidden]="list[2]" (click)="changeEditMode(i)">{{list[1]}}</button>
+        
+        <div class="textbox input-group input-group-sm" [hidden]="!list[2]">
+            <input type="text" class="form-control" placeholder="{{list[1]}}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="changeEditMode(i)">B</button>
+            </div>
+          </div>
+
+       <button [hidden]="list[2]" type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list.id)"><i class="fas fa-trash-alt"></i></button>
+      </div>
         
       </span>
       <div cdkDropList>

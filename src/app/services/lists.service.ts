@@ -19,6 +19,10 @@ export class ListsService {
     return this.httpClient.post<any>(this.listsApi, data, httpOptions)
   }
 
+  updateList(data, id): Observable<any> {
+    return this.httpClient.put<any>(this.listsApi + "/" + id, data, httpOptions)
+  }
+
   retrieveOneList(id): Observable<any> {
     return this.httpClient.get<any>(this.listsApi + "/" + id, httpOptions)
   }
