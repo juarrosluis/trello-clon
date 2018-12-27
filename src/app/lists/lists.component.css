@@ -1,3 +1,7 @@
+.long {
+    max-width: 3600px;
+}
+
 .list {
     padding-top: 10px;
     background-color: lightgray;
@@ -86,3 +90,4 @@
 .list-container.cdk-drop-list-dragging {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
