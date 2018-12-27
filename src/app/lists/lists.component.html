@@ -29,24 +29,24 @@
       </div>
     </div> 
     <div class="col-sm-1 one-list-container">
-        <div class="card list">
-          <div *ngIf="createAList; else offerToCreateAList">
-            <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
-              <div class="input-group input-group-sm mb-1">
-                <input type="text" class="form-control" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
-              </div>
-              <span>
-                <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
-                <button type="button" class="btn btn-link col-sm-1" (click)="closeListCreation()">X</button>
-              </span>
-            </form>
-          </div>
-          <ng-template #offerToCreateAList>
-            <div class="card-body add-another-list" (click)="wantToCreateAList()">
-              + Add another list
+      <div class="card list">
+        <div *ngIf="createAList; else offerToCreateAList">
+          <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
+            <div class="input-group input-group-sm mb-1">
+              <input type="text" class="form-control" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
             </div>
-          </ng-template>
+            <span>
+              <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
+              <button type="button" class="btn btn-link col-sm-1" (click)="closeListCreation()">X</button>
+            </span>
+          </form>
         </div>
+        <ng-template #offerToCreateAList>
+          <div class="card-body add-another-list" (click)="wantToCreateAList()">
+            + Add another list
+          </div>
+        </ng-template>
       </div>
+    </div>
   </div>
 </ng-template>

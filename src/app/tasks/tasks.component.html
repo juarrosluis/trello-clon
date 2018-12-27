@@ -1,7 +1,39 @@
 <div cdkDropList>
-    <div *ngFor="let artist of artists" class="card list-item" cdkDrag>
+    <div *ngFor="let artist of artists" class="card task-item" cdkDrag>
       <div class="card-body">
         {{artist}}
       </div>
     </div>
+
+
+    <div *ngIf="createATask; else offerToCreateATask">
+        <form class="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="onFormSubmit(createTaskForm)">
+          <div class="input-group input-group-sm mb-1">
+            <textarea placeholder="Enter a title for this card..." rows="3" formControlName="taskName" class="form-control" required autofocus></textarea>
+          </div>
+          <span>
+            <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createTaskForm.valid">Add Card</button>
+            <button type="button" class="btn btn-link col-sm-1" (click)="closeTaskCreation()">X</button>
+          </span>
+        </form>
+      </div>
+      
+      
+      
+      <ng-template #offerToCreateATask>
+          <div class="card new-task-item" (click)="wantToCreateATask()">
+              <div class="card-body">
+                + Add a card
+              </div>
+            </div>
+      </ng-template>
+
+
+
+
+
+
+
+
+    
   </div>

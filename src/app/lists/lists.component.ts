@@ -57,7 +57,6 @@ export class ListsComponent implements OnInit {
   }
   getAllLists() {
     this.listsService.retrieveAllLists()
-    
    .subscribe(
       data => {
         var sortedLists = data.sort((obj1,obj2) => obj1.id - obj2.id)

@@ -11,8 +11,8 @@ const httpOptions = {
 })
 export class TasksService {
 
-  private tasksApi = "http://localhost:1337/apitrello.herokuapp.com/taks";
-  private listTasksApi = "http://localhost:1337/apitrello.herokuapp.com/lists/taks";
+  private tasksApi = "http://localhost:1337/apitrello.herokuapp.com/tasks";
+  private listTasksApi = "http://localhost:1337/apitrello.herokuapp.com/list/tasks";
   
   constructor(private httpClient: HttpClient) { }
 
