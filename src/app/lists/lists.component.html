@@ -6,13 +6,13 @@
         <button type="button" class="btn-link btn-sm transparent" [hidden]="list[2]" (click)="changeEditMode(i)">{{list[1]}}</button>
         
         <div class="textbox input-group input-group-sm" [hidden]="!list[2]">
-            <input type="text" #textBoxName class="form-control" placeholder="{{list[1]}}">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="changeEditMode(i);modifyListName(textBoxName.value, list[0])">B</button>
-            </div>
+          <input type="text" #textBoxName class="form-control" placeholder="{{list[1]}}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="changeEditMode(i);modifyListName(textBoxName.value, list[0]);list[1]='editing...';">B</button>
           </div>
+        </div>
 
-       <button [hidden]="list[2]" type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list.id)"><i class="fas fa-trash-alt"></i></button>
+       <button [hidden]="list[2]" type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list[0])"><i class="fas fa-trash-alt"></i></button>
       </div>
       </span>
       {{list[0].id}}
@@ -31,7 +31,7 @@
       <div *ngIf="createAList; else offerToCreateAList">
         <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
           <div class="input-group input-group-sm mb-1">
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
+            <input type="text" class="form-control" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
           </div>
           <span>
             <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
