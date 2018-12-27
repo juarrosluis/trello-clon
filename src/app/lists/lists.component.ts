@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListsService } from '../services/lists.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-lists',
@@ -31,6 +32,10 @@ export class ListsComponent implements OnInit {
 
   ngOnInit() {
     this.getAllLists(); 
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
   }
 
   changeEditMode(index) {
