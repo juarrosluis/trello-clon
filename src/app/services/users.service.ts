@@ -15,8 +15,8 @@ const httpOptions = {
 
 export class UsersService {
 
-  private usersApi = " http://localhost:1337/apitrello.herokuapp.com/users";
-  private usersLoginApi = " http://localhost:1337/apitrello.herokuapp.com/users/login";
+  private usersApi = "http://localhost:1337/apitrello.herokuapp.com/users";
+  private usersLoginApi = "http://localhost:1337/apitrello.herokuapp.com/users/login";
   
   constructor(public jwtHelper: JwtHelperService, private httpClient: HttpClient) {}
 
