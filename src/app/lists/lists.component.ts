@@ -16,6 +16,7 @@ export class ListsComponent implements OnInit {
   private lists:any[];
   private sortedLists:any[];
   private editMode:boolean[];
+  private retrievingData = true;
   artists = [
     'The One Thing: The surprisingly simple truth behind extraordinary results',
     'Artist II - Wizkid',
@@ -68,6 +69,7 @@ export class ListsComponent implements OnInit {
       data => {
         var sortedLists = data.sort((obj1,obj2) => obj1.id - obj2.id)
         this.lists = sortedLists.map(list => [list.id, list.name, false])
+        this.retrievingData = false;
       }
     );
   }
