@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TasksService } from '../services/tasks.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
@@ -35,7 +36,6 @@ export class TasksComponent implements OnInit {
   deleteTask(taskID,listID) {
     this.tasksService.deleteTask(taskID)
     .subscribe(res => {
-      console.log(listID)
       this.tasksService.retrieveAllTasksOfAList(listID)
       .subscribe(data => this.tasks = data)
     }, (err) => {
@@ -83,6 +83,10 @@ export class TasksComponent implements OnInit {
         this.retrievingData = false;
       }
     );
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 
 }
