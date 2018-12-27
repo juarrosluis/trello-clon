@@ -28,6 +28,10 @@ export class TasksService {
     return this.httpClient.delete(this.tasksApi + "/" + listID, httpOptions);
   }
 
+  deleteTask(id){
+    return this.httpClient.delete<any>(this.tasksApi + "/" + id, httpOptions)
+  }
+
   retrieveTask(id:number): Observable<any> {
     return this.httpClient.get<any>(this.tasksApi + "/" + id, httpOptions)
   }

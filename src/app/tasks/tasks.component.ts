@@ -32,6 +32,18 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  deleteTask(taskID,listID) {
+    this.tasksService.deleteTask(taskID)
+    .subscribe(res => {
+      console.log(listID)
+      this.tasksService.retrieveAllTasksOfAList(listID)
+      .subscribe(data => this.tasks = data)
+    }, (err) => {
+      console.log(err);
+      let snackBarRef = this.sb.openSnackBar('Error deleteting the card :(', "Close");
+    });
+  }
+
   ngOnInit() {
     this.getAllTasks(this.listID);
   }
