@@ -18,6 +18,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule } from '@angular/material';
 import { Overlay } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TasksComponent } from './tasks/tasks.component';
 
 
 export function tokenGetter() {
@@ -31,7 +32,8 @@ export function tokenGetter() {
     UserLoginComponent,
     DashboardComponent,
     ListsComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,

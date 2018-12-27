@@ -17,13 +17,6 @@ export class ListsComponent implements OnInit {
   private sortedLists:any[];
   private editMode:boolean[];
   private retrievingData = true;
-  artists = [
-    'The One Thing: The surprisingly simple truth behind extraordinary results',
-    'Artist II - Wizkid',
-    'Artist III - Burna Boy',
-    'Artist IV - Kiss Daniel',
-    'Artist V - Mayorkun'
-  ];
 
   constructor(private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({

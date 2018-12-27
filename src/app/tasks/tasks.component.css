@@ -1,0 +1,10 @@
+.list-item {
+    background-color: white;
+    font-size: 13px;
+    margin: 5px;
+}
+
+.card-body {
+    margin:8px;
+    padding: 0;
+}

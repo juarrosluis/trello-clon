@@ -25,13 +25,7 @@
         </div>
         </span>
         {{list[0].id}}
-        <div cdkDropList>
-          <div *ngFor="let artist of artists" class="card list-item" cdkDrag>
-            <div class="card-body">
-              {{artist}}
-            </div>
-          </div>
-        </div>
+        <app-tasks></app-tasks>
       </div>
     </div> 
     <div class="col-sm-1 one-list-container">
