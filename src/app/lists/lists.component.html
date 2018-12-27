@@ -1,5 +1,5 @@
 <div cdkDropList cdkDropListOrientation="horizontal" class="list-container" (cdkDropListDropped)="drop($event)">
-  <div *ngFor="let list of lists; let i = index" class="col-sm-3 p-0" cdkDrag>
+  <div *ngFor="let list of lists; let i = index" class="col-sm-1 one-list-container" cdkDrag>
     <div class="card list">
       <span>
       <div class="card-title">
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div> 
-  <div class="col-sm-3">
+  <div class="col-sm-1 one-list-container">
       <div class="card list">
         <div *ngIf="createAList; else offerToCreateAList">
           <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
