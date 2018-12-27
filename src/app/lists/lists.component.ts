@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListsService } from '../services/lists.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { TasksService } from '../services/tasks.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-lists',
@@ -18,7 +20,7 @@ export class ListsComponent implements OnInit {
   private editMode:boolean[];
   private retrievingData = true;
 
-  constructor(private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
+  constructor(private tasksService: TasksService, private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({
       listName: ['', Validators.required ]
     });
@@ -50,11 +52,30 @@ export class ListsComponent implements OnInit {
     }
     this.modifyOneList(listUpdated,id);
   }
-  deleteOneList(id:string) {
-    this.listsService.deleteList(id).subscribe(
-      res => this.getAllLists()
-    );
+
+  deleteOneList(id:number) {
+    this.tasksService.retrieveAllTasksOfAList(id)
+    .subscribe(data => {
+      if (data === null) {
+        this.listsService.deleteList(id)
+        .subscribe(res => this.getAllLists()), 
+          (err) => {
+            let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+          };
+      }
+      else {
+        this.tasksService.deleteAllTasksOfAList(id)
+        .subscribe(data => {
+          this.listsService.deleteList(id)
+          .subscribe(res => this.getAllLists());
+        }, 
+        (err) => {
+          let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+        });
+      }
+    })
   }
+
   getAllLists() {
     this.listsService.retrieveAllLists()
    .subscribe(
@@ -63,7 +84,7 @@ export class ListsComponent implements OnInit {
         this.lists = sortedLists.map(list => [list.id, list.name, false])
         this.retrievingData = false;
       }
-    );
+    )
   }
 
   wantToCreateAList(){
