@@ -22,6 +22,22 @@
     padding: 0;
 }
 
+.card {
+    padding-left: 0;
+}
+.card:hover {
+    background: darkgray;
+}
+
+.actions {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+.actions:hover {
+    color: lightgray;
+}
+
 .create-task-form {
     margin-left: 5px;
     margin-right: 5px;

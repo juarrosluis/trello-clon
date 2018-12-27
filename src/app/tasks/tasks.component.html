@@ -10,8 +10,10 @@
 <ng-template class="row long" #dataRetrieved>
   <div cdkDropList>
       <div *ngFor="let task of tasks" class="card task-item" cdkDrag>
-        <div class="card-body">
-          {{task.task}}
+        <div class="card-body row">
+          <div class="col-sm-10 p-0 m-0">{{task.task}}</div>
+          <div class="col-sm-1 actions text-right"><i class="fas fa-pen"></i></div>
+          <div class="col-sm-1 actions text-right"><i class="fas fa-trash-alt"></i></div>
         </div>
       </div>
 
