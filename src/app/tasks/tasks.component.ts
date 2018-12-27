@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TasksService } from '../services/tasks.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
@@ -24,6 +24,8 @@ export class TasksComponent implements OnInit {
     'Artist V - Mayorkun'
   ];
 
+  @Input() public listID:number;
+
   constructor(private sb: SnackbarComponent, private fb: FormBuilder, private tasksService: TasksService) { 
     this.createTaskForm = this.fb.group({
       taskName: ['', Validators.required ]
@@ -31,6 +33,7 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllTasks(this.listID);
   }
 
   wantToCreateATask(){
@@ -44,25 +47,27 @@ export class TasksComponent implements OnInit {
   onFormSubmit(form:FormGroup) {
     this.closeTaskCreation();
     const form_data = {
-      "idlist" : 42,
+      "idlist" : this.listID,
       "task" : form.controls['taskName'].value
     }
     form.controls['taskName'].setValue("");
     this.tasksService.createTaskOnAList(form_data)
       .subscribe(res => {
-        this.getAllTasks()
+        this.getAllTasks(this.listID)
       }, (err) => {
         console.log(err);
-        let snackBarRef = this.sb.openSnackBar('Error creating the list :(', "Close");
+        let snackBarRef = this.sb.openSnackBar('Error creating the card :(', "Close");
       });
   }
 
-  getAllTasks() {
-    this.tasksService.retrieveAllTasksOfAList(42)
+  getAllTasks(id) {
+    this.tasksService.retrieveAllTasksOfAList(id)
    .subscribe(
       data => {
-        var sortedTasks = data.sort((obj1,obj2) => obj1.id - obj2.id)
-        this.tasks = sortedTasks.map(list => [list.id, list.name, false])
+        //var sortedTasks = data.sort((obj1,obj2) => obj1.id - obj2.id)
+        //this.tasks = sortedTasks.map(list => [list.id, list.name, false])
+        this.tasks = data;
+        console.log(data);
         this.retrievingData = false;
       }
     );

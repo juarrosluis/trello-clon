@@ -1,39 +1,41 @@
-<div cdkDropList>
-    <div *ngFor="let artist of artists" class="card task-item" cdkDrag>
-      <div class="card-body">
-        {{artist}}
-      </div>
+{{listID}}
+<div *ngIf="retrievingData; else dataRetrieved">
+  <div class="container">
+    <div class="col-xs-12">
+        <p class="text-center">Loading data <i class="fas fa-spinner fa-pulse"></i></p>
     </div>
-
-
-    <div *ngIf="createATask; else offerToCreateATask">
-        <form class="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="onFormSubmit(createTaskForm)">
-          <div class="input-group input-group-sm mb-1">
-            <textarea placeholder="Enter a title for this card..." rows="3" formControlName="taskName" class="form-control" required autofocus></textarea>
-          </div>
-          <span>
-            <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createTaskForm.valid">Add Card</button>
-            <button type="button" class="btn btn-link col-sm-1" (click)="closeTaskCreation()">X</button>
-          </span>
-        </form>
-      </div>
-      
-      
-      
-      <ng-template #offerToCreateATask>
-          <div class="card new-task-item" (click)="wantToCreateATask()">
-              <div class="card-body">
-                + Add a card
-              </div>
-            </div>
-      </ng-template>
-
-
-
-
-
-
-
-
-    
   </div>
+</div>
+
+<ng-template class="row long" #dataRetrieved>
+  <div cdkDropList>
+      <div *ngFor="let task of tasks" class="card task-item" cdkDrag>
+        <div class="card-body">
+          {{task.task}}
+        </div>
+      </div>
+
+
+      <div *ngIf="createATask; else offerToCreateATask">
+          <form class="create-task-form" [formGroup]="createTaskForm" (ngSubmit)="onFormSubmit(createTaskForm)">
+            <div class="input-group input-group-sm mb-1">
+              <textarea placeholder="Enter a title for this card..." rows="3" formControlName="taskName" class="form-control" required autofocus></textarea>
+            </div>
+            <span>
+              <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createTaskForm.valid">Add Card</button>
+              <button type="button" class="btn btn-link col-sm-1" (click)="closeTaskCreation()">X</button>
+            </span>
+          </form>
+        </div>
+        
+        
+        
+        <ng-template #offerToCreateATask>
+            <div class="card new-task-item" (click)="wantToCreateATask()">
+                <div class="card-body">
+                  + Add a card
+                </div>
+              </div>
+        </ng-template>
+  </div>
+</ng-template>
