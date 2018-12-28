@@ -37,7 +37,12 @@ export class TasksComponent implements OnInit {
     this.tasksService.deleteTask(taskID)
     .subscribe(res => {
       this.tasksService.retrieveAllTasksOfAList(listID)
-      .subscribe(data => this.tasks = data)
+      .subscribe(data => {
+        if(data != null) {
+          var sortedTasks = data.sort((obj1,obj2) => obj1.id - obj2.id)
+          this.tasks = sortedTasks.map(task => [task.id, task.task, task.idlist, false])
+        }
+      })
     }, (err) => {
       console.log(err);
       let snackBarRef = this.sb.openSnackBar('Error deleteting the card :(', "Close");
