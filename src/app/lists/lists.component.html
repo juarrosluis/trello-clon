@@ -33,7 +33,7 @@
         <div *ngIf="createAList; else offerToCreateAList">
           <form class="create-list-form" [formGroup]="createListForm" (ngSubmit)="onFormSubmit(createListForm)">
             <div class="input-group input-group-sm mb-1">
-              <input type="text" class="form-control" placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
+              <input type="text" class="form-control" autofocus placeholder="Enter list title..." formControlName="listName" class="form-control" required autofocus>
             </div>
             <span>
               <button type="submit" class="btn btn-success btn-sm col-sm-4" [disabled]="!createListForm.valid">Add List</button>
