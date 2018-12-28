@@ -10,20 +10,22 @@
   <div cdkDropList cdkDropListOrientation="horizontal" class="list-container" (cdkDropListDropped)="drop($event)">
     <div *ngFor="let list of lists; let i = index" class="col-sm-1 one-list-container" cdkDrag>
       <div class="card list">
-        <span>
-        <div class="card-title">
-          <button type="button" class="btn-link btn-sm transparent" [hidden]="list[2]" (click)="changeEditMode(i)">{{list[1]}}</button>
-          
-          <div class="textbox input-group input-group-sm" [hidden]="!list[2]">
+
+        <div class="card-title row">
+          <div class="col-xs-12 textbox input-group input-group-sm" [hidden]="!list[2]">
             <input type="text" #textBoxName class="form-control" placeholder="{{list[1]}}">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="changeEditMode(i);modifyListName(textBoxName.value, list[0]);list[1]='editing...';">B</button>
+              <button class="btn btn-outline-secondary" type="button" (click)="changeEditMode(i);modifyListName(textBoxName.value, list[0]);list[1]='editing...';"><i class="fas fa-check"></i></button>
             </div>
           </div>
-
-          <button [hidden]="list[2]" type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list[0])"><i class="fas fa-trash-alt"></i></button>
+          <div class="col-md-10">    
+            <button type="button" class="btn-link btn-sm transparent text-left" [hidden]="list[2]" (click)="changeEditMode(i)">{{list[1]}}</button>
+          </div>
+          <div class="col-md-2">
+            <button [hidden]="list[2]" type="button" class="btn btn-sm btn-link col-sm-1" (click)="deleteOneList(list[0])"><i class="fas fa-trash-alt"></i></button>
+          </div>
         </div>
-        </span>
+        
         {{list[0].id}}
         <app-tasks [listID]=list[0]></app-tasks>
       </div>
