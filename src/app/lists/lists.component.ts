@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListsService } from '../services/lists.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TasksService } from '../services/tasks.service';
+import { MatDialog } from '@angular/material';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-lists',
@@ -17,15 +20,9 @@ export class ListsComponent implements OnInit {
   private sortedLists:any[];
   private editMode:boolean[];
   private retrievingData = true;
-  artists = [
-    'The One Thing: The surprisingly simple truth behind extraordinary results',
-    'Artist II - Wizkid',
-    'Artist III - Burna Boy',
-    'Artist IV - Kiss Daniel',
-    'Artist V - Mayorkun'
-  ];
+  private modalResponse:string="";
 
-  constructor(private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
+  constructor(public dialog: MatDialog, private tasksService: TasksService, private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({
       listName: ['', Validators.required ]
     });
@@ -57,21 +54,49 @@ export class ListsComponent implements OnInit {
     }
     this.modifyOneList(listUpdated,id);
   }
-  deleteOneList(id:string) {
-    this.listsService.deleteList(id).subscribe(
-      res => this.getAllLists()
-    );
+
+  deleteOneList(id:number, index:number) {
+    this.tasksService.retrieveAllTasksOfAList(id)
+    .subscribe(
+      data => {
+        if (data === null) {
+          this.listsService.deleteList(id)
+          .subscribe(() => this.lists.splice(index, 1))
+        }
+        else {
+          const dialogRef = this.dialog.open(ModalComponent, {
+            width: '250px',
+            data: {modalResponse: this.modalResponse}
+          });
+      
+          dialogRef.afterClosed().subscribe(wantToDelete => {
+            if(wantToDelete) {
+              this.tasksService.deleteAllTasksOfAList(id)
+              .subscribe(
+                data => {
+                  this.listsService.deleteList(id)
+                  .subscribe(() => this.lists.splice(index, 1))
+                  
+                }  
+              )
+            }
+          });
+        }
+      }),
+      (err) => {
+        let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+      };
   }
+
   getAllLists() {
     this.listsService.retrieveAllLists()
-    
    .subscribe(
       data => {
         var sortedLists = data.sort((obj1,obj2) => obj1.id - obj2.id)
         this.lists = sortedLists.map(list => [list.id, list.name, false])
         this.retrievingData = false;
       }
-    );
+    )
   }
 
   wantToCreateAList(){

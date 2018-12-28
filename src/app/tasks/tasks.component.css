@@ -1,0 +1,60 @@
+.task-item {
+    background-color: white;
+    font-size: 13px;
+    margin: 5px;
+}
+.new-task-item {
+    background-color: lightgray;
+    border: 0;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+.new-task-item:hover {
+    background-color: white;
+}
+
+.card-body {
+    margin:9px;
+    padding: 0;
+}
+
+.card {
+    padding-left: 0;
+}
+.card:hover {
+    background: darkgray;
+}
+
+.actions {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+.actions:hover {
+    color: lightgray;
+}
+
+.create-task-form {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.double {
+    height: 40px;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: black;
+    
+}
+
+
+.one-list-container {
+    max-width: 300px;
+    padding: 0;
+}

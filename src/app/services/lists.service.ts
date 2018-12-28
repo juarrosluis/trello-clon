@@ -31,7 +31,7 @@ export class ListsService {
     return this.httpClient.get<any[]>(this.listsApi, httpOptions)
   }
 
-  deleteList(id:string){
+  deleteList(id:number){
     return this.httpClient.delete(this.listsApi + "/" + id, httpOptions);
   }
 
