@@ -76,10 +76,10 @@ export class TasksComponent implements OnInit {
     this.tasksService.retrieveAllTasksOfAList(id)
    .subscribe(
       data => {
-        //var sortedTasks = data.sort((obj1,obj2) => obj1.id - obj2.id)
-        //this.tasks = sortedTasks.map(list => [list.id, list.name, false])
-        this.tasks = data;
-        console.log(data);
+        if(data != null) {
+          var sortedTasks = data.sort((obj1,obj2) => obj1.id - obj2.id)
+          this.tasks = sortedTasks.map(task => [task.id, task.task, task.idlist, false])
+        }
         this.retrievingData = false;
       }
     );
@@ -87,6 +87,24 @@ export class TasksComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+  }
+
+  modifyTaskName(name, idTask, idList) {
+    const taskUpdated = {
+      task : name
+    }
+    this.modifyOneTask(taskUpdated,idTask, idList);
+  }
+
+  modifyOneTask(data, idTask, idList) {
+    this.tasksService.updateTask(data, idTask).subscribe(
+      res => this.getAllTasks(idList)
+    );
+  }
+
+  changeEditMode(index) {
+    this.tasks[index][3] = !this.tasks[index][3];
+    console.log("index: " + index + " status: " + this.tasks[index][3]);
   }
 
 }

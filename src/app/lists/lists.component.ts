@@ -55,36 +55,37 @@ export class ListsComponent implements OnInit {
     this.modifyOneList(listUpdated,id);
   }
 
-  deleteOneList(id:number) {
+  deleteOneList(id:number, index:number) {
     this.tasksService.retrieveAllTasksOfAList(id)
-    .subscribe(data => {
-      if (data === null) {
-        this.listsService.deleteList(id)
-        .subscribe(res => this.getAllLists()), 
-          (err) => {
-            let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
-          };
-      }
-      else {
-        const dialogRef = this.dialog.open(ModalComponent, {
-          width: '250px',
-          data: {modalResponse: this.modalResponse}
-        });
-    
-        dialogRef.afterClosed().subscribe(wantToDelete => {
-          if(wantToDelete) {
-            this.tasksService.deleteAllTasksOfAList(id)
-            .subscribe(data => {
-              this.listsService.deleteList(id)
-              .subscribe(res => this.getAllLists());
-            }, 
-            (err) => {
-              let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
-            });
-          }  
-        });
-      }
-    })
+    .subscribe(
+      data => {
+        if (data === null) {
+          this.listsService.deleteList(id)
+          .subscribe(() => this.lists.splice(index, 1))
+        }
+        else {
+          const dialogRef = this.dialog.open(ModalComponent, {
+            width: '250px',
+            data: {modalResponse: this.modalResponse}
+          });
+      
+          dialogRef.afterClosed().subscribe(wantToDelete => {
+            if(wantToDelete) {
+              this.tasksService.deleteAllTasksOfAList(id)
+              .subscribe(
+                data => {
+                  this.listsService.deleteList(id)
+                  .subscribe(() => this.lists.splice(index, 1))
+                  
+                }  
+              )
+            }
+          });
+        }
+      }),
+      (err) => {
+        let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+      };
   }
 
   getAllLists() {
