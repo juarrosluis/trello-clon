@@ -6,7 +6,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TasksService } from '../services/tasks.service';
 import { MatDialog } from '@angular/material';
 import { ModalComponent } from '../modal/modal.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lists',
@@ -73,7 +72,6 @@ export class ListsComponent implements OnInit {
         });
     
         dialogRef.afterClosed().subscribe(wantToDelete => {
-          console.log('The dialog was closed');
           if(wantToDelete) {
             this.tasksService.deleteAllTasksOfAList(id)
             .subscribe(data => {
