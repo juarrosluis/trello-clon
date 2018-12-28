@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ListsService } from '../services/lists.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TasksService } from '../services/tasks.service';
 import { MatDialog } from '@angular/material';
+import { ModalComponent } from '../modal/modal.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lists',
@@ -19,8 +21,9 @@ export class ListsComponent implements OnInit {
   private sortedLists:any[];
   private editMode:boolean[];
   private retrievingData = true;
+  private modalResponse:string="";
 
-  constructor(private tasksService: TasksService, private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
+  constructor(public dialog: MatDialog, private tasksService: TasksService, private sb: SnackbarComponent, private fb: FormBuilder, private listsService: ListsService) {
     this.createListForm = this.fb.group({
       listName: ['', Validators.required ]
     });
@@ -64,13 +67,23 @@ export class ListsComponent implements OnInit {
           };
       }
       else {
-        this.tasksService.deleteAllTasksOfAList(id)
-        .subscribe(data => {
-          this.listsService.deleteList(id)
-          .subscribe(res => this.getAllLists());
-        }, 
-        (err) => {
-          let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+        const dialogRef = this.dialog.open(ModalComponent, {
+          width: '250px',
+          data: {modalResponse: this.modalResponse}
+        });
+    
+        dialogRef.afterClosed().subscribe(wantToDelete => {
+          console.log('The dialog was closed');
+          if(wantToDelete) {
+            this.tasksService.deleteAllTasksOfAList(id)
+            .subscribe(data => {
+              this.listsService.deleteList(id)
+              .subscribe(res => this.getAllLists());
+            }, 
+            (err) => {
+              let snackBarRef = this.sb.openSnackBar('Error deleting the list :(', "Close");
+            });
+          }  
         });
       }
     })

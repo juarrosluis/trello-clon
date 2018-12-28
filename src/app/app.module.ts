@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserRegistrationComponent } from './users/user-registration/user-registration.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersService } from './services/users.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserLoginComponent } from './users/user-login/user-login.component';
@@ -15,10 +15,11 @@ import { ListsComponent } from './lists/lists.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InterceptorService } from './services/interceptor.service';
 import { SnackbarComponent } from './snackbar/snackbar.component';
-import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule } from '@angular/material';
+import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule, MatFormFieldModule, MatDialogModule, MatInputModule } from '@angular/material';
 import { Overlay } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TasksComponent } from './tasks/tasks.component';
+import { ModalComponent } from './modal/modal.component';
 
 
 export function tokenGetter() {
@@ -33,7 +34,8 @@ export function tokenGetter() {
     DashboardComponent,
     ListsComponent,
     SnackbarComponent,
-    TasksComponent
+    TasksComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -47,8 +49,13 @@ export function tokenGetter() {
     }),
     DragDropModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatDialogModule,
+    MatInputModule
   ],
+  entryComponents: [ModalComponent],
   providers: [UsersService, UsersGuardService, JwtHelperService, {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,
